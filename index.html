@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#243b32">
+  <meta name="description" content="Um jogo educativo de estratégia por turnos sobre as guerras mundiais.">
+  <title>World War: Decisões</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="World War: Decisões, início">
+      <span class="brand-mark">W<span>·</span>W</span>
+      <span class="brand-name">WORLD WAR <b>:</b> DECISÕES</span>
+    </a>
+    <div class="header-note"><span class="status-dot"></span> SIMULAÇÃO HISTÓRICA · 1914—1945</div>
+  </header>
+
+  <main>
+    <section class="welcome screen" id="start-screen" aria-labelledby="welcome-title">
+      <div class="welcome-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> História em perspectiva</p>
+        <h1 id="welcome-title">O futuro também<br>se decide <em>à mesa.</em></h1>
+        <p class="intro-text">Duas guerras, decisões difíceis e consequências que ultrapassam fronteiras. Conduza uma coalizão, estude o contexto e descubra o custo de cada escolha.</p>
+        <div class="start-instruction"><span class="instruction-number">01</span><span>Escolha um período para iniciar a campanha</span></div>
+      </div>
+      <div class="campaign-options" aria-label="Escolha uma campanha">
+        <button class="campaign-choice" data-campaign="wwi" type="button">
+          <span class="choice-topline"><span>01 / A GRANDE GUERRA</span><span class="choice-arrow" aria-hidden="true">↗</span></span>
+          <span class="choice-years">1914 <i>—</i> 1918</span>
+          <span class="choice-title">Primeira Guerra Mundial</span>
+          <span class="choice-description">Alianças, mobilização e uma paz que não encerrou as tensões.</span>
+          <span class="choice-meta"><span>5 TURNOS</span><span>EUROPA · 1914</span></span>
+        </button>
+        <button class="campaign-choice campaign-choice-dark" data-campaign="wwii" type="button">
+          <span class="choice-topline"><span>02 / GUERRA TOTAL</span><span class="choice-arrow" aria-hidden="true">↗</span></span>
+          <span class="choice-years">1939 <i>—</i> 1945</span>
+          <span class="choice-title">Segunda Guerra Mundial</span>
+          <span class="choice-description">A expansão do Eixo, a resistência aliada e a reconstrução do pós-guerra.</span>
+          <span class="choice-meta"><span>6 TURNOS</span><span>EUROPA · 1939</span></span>
+        </button>
+        <p class="disclaimer">As campanhas são modelos didáticos. As decisões do jogador não alteram o registro histórico real.</p>
+      </div>
+      <div class="welcome-watermark" aria-hidden="true">EUROPA<br><span>46° N</span></div>
+    </section>
+
+    <section class="campaign screen" id="campaign-screen" hidden aria-live="polite">
+      <div class="campaign-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span><span id="campaign-kicker">CAMPANHA · FRENTE EUROPEIA</span></p>
+          <h1 id="campaign-title">A Grande Guerra</h1>
+        </div>
+        <div class="turn-display"><span class="turn-label">ANO DE CAMPANHA</span><strong id="current-year">1914</strong><span id="turn-count">TURNO 1 / 5</span></div>
+      </div>
+
+      <div class="resource-bar" aria-label="Recursos da coalizão">
+        <div class="resource resource-lead"><span class="resource-symbol">◈</span><div><span class="resource-label">INDÚSTRIA</span><strong id="industry-value">62</strong></div><span class="resource-unit">CAP.</span></div>
+        <div class="resource"><span class="resource-symbol">⌂</span><div><span class="resource-label">ABASTECIMENTO</span><strong id="supply-value">58</strong></div><span class="resource-unit">CAP.</span></div>
+        <div class="resource"><span class="resource-symbol">◎</span><div><span class="resource-label">COESÃO</span><strong id="cohesion-value">55</strong></div><span class="resource-unit">PONTOS</span></div>
+        <div class="resource"><span class="resource-symbol">↔</span><div><span class="resource-label">DIPLOMACIA</span><strong id="diplomacy-value">48</strong></div><span class="resource-unit">PONTOS</span></div>
+        <div class="score-box"><span>PONTUAÇÃO</span><strong id="score-value">000</strong></div>
+      </div>
+
+      <div class="play-grid">
+        <section class="map-panel" aria-labelledby="map-heading">
+          <div class="panel-heading">
+            <div><p class="section-index">01 / TEATRO DE OPERAÇÕES</p><h2 id="map-heading">Europa em foco</h2></div>
+            <span class="map-date" id="map-date">AGOSTO · 1914</span>
+          </div>
+          <p class="map-hint"><span class="pulse-dot"></span> Selecione um país para consultar seu papel histórico</p>
+          <div class="map-wrap">
+            <svg class="europe-map" viewBox="0 0 720 440" role="img" aria-labelledby="map-title map-description">
+              <title id="map-title">Mapa esquemático da Europa durante a guerra</title>
+              <desc id="map-description">Mapa interativo de países europeus envolvidos nos conflitos mundiais. As fronteiras são esquemáticas e não representam limites precisos.</desc>
+              <defs>
+                <pattern id="map-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#a8a17f" stroke-width=".45" opacity=".45"/></pattern>
+                <pattern id="sea-lines" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 10h8m5 0h7" stroke="#70918a" stroke-width=".6" opacity=".3"/></pattern>
+              </defs>
+              <rect width="720" height="440" class="sea"/>
+              <rect width="720" height="440" fill="url(#sea-lines)"/>
+              <rect x="18" y="18" width="684" height="404" fill="url(#map-grid)" opacity=".4"/>
+              <text x="85" y="260" class="sea-label">OCEANO ATLÂNTICO</text>
+              <text x="510" y="395" class="sea-label">MAR MEDITERRÂNEO</text>
+              <g class="map-country" data-country="noruega" tabindex="0" role="button" aria-label="Noruega"><path d="M303 38 322 26 333 43 328 67 344 79 334 103 345 118 332 145 316 156 306 137 315 115 302 93 309 70Z"/><text x="307" y="88">NORUEGA</text></g>
+              <g class="map-country" data-country="suecia" tabindex="0" role="button" aria-label="Suécia"><path d="m345 48 27-11 18 16 2 32-14 27-7 31-16 24-15-14 11-27-10-24 9-23Z"/><text x="353" y="101">SUÉCIA</text></g>
+              <g class="map-country" data-country="finlandia" tabindex="0" role="button" aria-label="Finlândia"><path d="m396 47 28-6 20 20-5 30-17 22-8 34-20-9 5-26-13-19 8-25Z"/><text x="399" y="98">FINLÂNDIA</text></g>
+              <g class="map-country" data-country="reino-unido" tabindex="0" role="button" aria-label="Reino Unido"><path d="m214 136 16-11 10 9-5 18 8 11-9 15-5 24-12 8-8-15 5-19-10-13 8-12Z"/><path d="m195 202 11-4 5 10-9 11-9-5Z"/><text x="177" y="171">REINO</text><text x="181" y="182">UNIDO</text></g>
+              <g class="map-country" data-country="irlanda" tabindex="0" role="button" aria-label="Irlanda"><path d="m177 158 14-4 7 10-4 18-12 4-8-12Z"/><text x="166" y="194">IRLANDA</text></g>
+              <g class="map-country" data-country="portugal" tabindex="0" role="button" aria-label="Portugal"><path d="m191 297 18-3-1 28-8 31-13-2 4-24Z"/><text x="158" y="328">PORTUGAL</text></g>
+              <g class="map-country" data-country="espanha" tabindex="0" role="button" aria-label="Espanha"><path d="m214 292 50-6 23 12 3 25-17 29-27 8-31-10-7-21Z"/><text x="228" y="323">ESPANHA</text></g>
+              <g class="map-country" data-country="franca" tabindex="0" role="button" aria-label="França"><path d="m274 225 36-8 21 16-4 25 12 19-18 20-31-2-17 11-24-17 5-29Z"/><text x="280" y="263">FRANÇA</text></g>
+              <g class="map-country" data-country="belgica" tabindex="0" role="button" aria-label="Bélgica"><path d="m324 207 24-4 11 15-9 14-22 2-9-12Z"/><text x="320" y="228">BÉLGICA</text></g>
+              <g class="map-country" data-country="paises-baixos" tabindex="0" role="button" aria-label="Países Baixos"><path d="m333 176 18-4 12 11-5 21-17 5-11-13Z"/><text x="323" y="190">PAÍSES BAIXOS</text></g>
+              <g class="map-country" data-country="alemanha" tabindex="0" role="button" aria-label="Alemanha"><path d="m359 187 35-6 22 18-6 28 12 20-18 22-31-5-21-19 8-22-12-17Z"/><text x="370" y="226">ALEMANHA</text></g>
+              <g class="map-country" data-country="dinamarca" tabindex="0" role="button" aria-label="Dinamarca"><path d="m355 154 11-6 10 10-3 16-12 1-7-9Z"/><text x="358" y="148">DINAMARCA</text></g>
+              <g class="map-country" data-country="polonia" tabindex="0" role="button" aria-label="Polônia"><path d="m417 202 40-9 24 18-3 29-26 22-35-5-14-17 12-18Z"/><text x="428" y="232">POLÔNIA</text></g>
+              <g class="map-country" data-country="suica" tabindex="0" role="button" aria-label="Suíça"><path d="m337 271 24-5 15 12-13 13-24-3-9-9Z"/><text x="333" y="289">SUÍÇA</text></g>
+              <g class="map-country" data-country="italia" tabindex="0" role="button" aria-label="Itália"><path d="m367 292 25 3 15 19-2 24 19 21-7 12-17-15-11-22-19-13-12-18Z"/><path d="m422 364 8 6-4 10-9-7Z"/><text x="376" y="327">ITÁLIA</text></g>
+              <g class="map-country" data-country="austria" tabindex="0" role="button" aria-label="Áustria-Hungria"><path d="m377 267 40-8 20 14-8 20-34 4-26-9Z"/><text x="382" y="281">ÁUSTRIA-</text><text x="387" y="291">HUNGRIA</text></g>
+              <g class="map-country" data-country="romenia" tabindex="0" role="button" aria-label="Romênia"><path d="m439 278 36-7 16 16-12 22-35 3-17-16Z"/><text x="441" y="296">ROMÊNIA</text></g>
+              <g class="map-country" data-country="balkans" tabindex="0" role="button" aria-label="Bálcãs"><path d="m435 312 31-4 14 19-8 19-26 3-19-17Z"/><text x="432" y="334">BÁLCÃS</text></g>
+              <g class="map-country" data-country="grecia" tabindex="0" role="button" aria-label="Grécia"><path d="m457 355 19-7 14 12-8 18-13 6-8-12-11-5Z"/><text x="461" y="373">GRÉCIA</text></g>
+              <g class="map-country" data-country="turquia" tabindex="0" role="button" aria-label="Império Otomano / Turquia"><path d="m497 333 49-9 23 10-12 18-47 5-19-9Z"/><text x="505" y="345">IMPÉRIO</text><text x="509" y="356">OTOMANO</text></g>
+              <g class="map-country" data-country="uniao-sovietica" tabindex="0" role="button" aria-label="Rússia / União Soviética"><path d="m463 143 42-15 39 14 30 27 56-4 27 24-15 33-38 6-17 34-39 14-14 31-37-5-12-26-29-4-7-28 22-23-12-24 14-22-22-13Z"/><text x="537" y="218">RÚSSIA /</text><text x="531" y="230">URSS</text></g>
+              <g class="map-country" data-country="estados-unidos" tabindex="0" role="button" aria-label="Estados Unidos"><path d="m84 355 29-10 34 9 9 17-14 21-36 3-25-14Z"/><text x="91" y="377">EUA</text></g>
+              <g class="map-compass" aria-hidden="true"><circle cx="660" cy="67" r="24"/><path d="m660 49 7 18-7-4-7 4Z"/><text x="657" y="37">N</text></g>
+              <text x="30" y="414" class="map-footnote">FRONTEIRAS ESQUEMÁTICAS · SEM ESCALA</text>
+            </svg>
+          </div>
+          <div class="map-legend"><span><i class="legend-swatch ally"></i>Coalizão do jogador</span><span><i class="legend-swatch opposing"></i>Coalizão adversária</span><span><i class="legend-swatch neutral"></i>Neutro / contestado</span></div>
+        </section>
+
+        <aside class="side-column">
+          <section class="intel-panel" aria-labelledby="intel-heading">
+            <div class="panel-heading compact-heading"><div><p class="section-index">02 / ARQUIVO</p><h2 id="intel-heading">Contexto histórico</h2></div><span class="archive-stamp">DOC. 04</span></div>
+            <div class="country-file" id="country-file">
+              <p class="file-overline" id="country-status">PANORAMA DO CONFLITO</p>
+              <h3 id="country-name">O continente em tensão</h3>
+              <p id="country-description">Selecione um país no mapa para compreender sua posição, seus interesses e o impacto da guerra em sua população.</p>
+              <div class="file-rule"></div>
+              <p class="file-note" id="country-note">A guerra envolveu sociedades inteiras. Este jogo trata de decisões políticas e logísticas, não de combate individual.</p>
+            </div>
+            <div class="event-brief" id="event-brief"><span class="brief-icon">✳</span><div><span class="file-overline">MARCO DESTE TURNO</span><p id="event-explanation">Cada turno representa um momento histórico. Leia o contexto antes de escolher.</p></div></div>
+          </section>
+          <section class="decision-panel" aria-labelledby="decision-heading">
+            <div class="panel-heading compact-heading"><div><p class="section-index">03 / CONSELHO DE GUERRA</p><h2 id="decision-heading">Sua decisão</h2></div><span class="decision-step" id="decision-type">DIPLOMACIA</span></div>
+            <p class="decision-prompt" id="decision-prompt">A mobilização altera o equilíbrio entre aliados e adversários.</p>
+            <div class="decision-options" id="decision-options"></div>
+            <p class="decision-feedback" id="decision-feedback" role="status" hidden></p>
+            <button class="next-turn-button" id="next-turn" type="button" disabled>Registrar decisão <span aria-hidden="true">→</span></button>
+          </section>
+        </aside>
+      </div>
+
+      <section class="timeline-section" aria-labelledby="timeline-heading">
+        <div class="timeline-head"><div><p class="section-index">04 / LINHA DO TEMPO</p><h2 id="timeline-heading">O século em movimento</h2></div><p class="timeline-caption">Momentos-chave de 1914 a 1945<br>Contexto real · decisões simuladas</p></div>
+        <div class="timeline-track" id="timeline-track" aria-label="Cronologia dos acontecimentos históricos"></div>
+      </section>
+      <section class="log-section" aria-labelledby="log-heading">
+        <div class="log-title"><p class="section-index">REGISTRO DE CAMPANHA</p><h2 id="log-heading">Consequências acumuladas</h2></div>
+        <ol class="decision-log" id="decision-log"><li class="empty-log">As decisões registradas aparecerão aqui.</li></ol>
+      </section>
+    </section>
+
+    <section class="ending screen" id="ending-screen" hidden aria-labelledby="ending-title">
+      <div class="ending-topline"><span>RELATÓRIO DE CAMPANHA · ARQUIVO 1945</span><span id="ending-period">1914—1918</span></div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> O conflito termina. As consequências, não.</p>
+      <h1 id="ending-title">Uma paz construída<br><em>sobre escolhas.</em></h1>
+      <p class="ending-lead" id="ending-lead"></p>
+      <div class="ending-stats" id="ending-stats"></div>
+      <div class="ending-reflection"><span class="reflection-mark">“</span><div><p id="ending-reflection-text"></p><span>LEITURA HISTÓRICA</span></div></div>
+      <div class="ending-actions"><button class="primary-button" id="restart-button" type="button">Nova campanha <span aria-hidden="true">↗</span></button><button class="text-button" id="back-to-menu" type="button">Voltar ao menu</button></div>
+      <p class="historical-note">A simulação é um recurso didático. Os resultados narrativos não substituem o estudo das fontes históricas.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><span>WORLD WAR : DECISÕES</span><span>APRENDER O PASSADO · PENSAR AS ESCOLHAS</span><span>1914—1945</span></footer>
+</body>
+</html>
